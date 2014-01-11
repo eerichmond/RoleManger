@@ -31,7 +31,7 @@ public class SoftwareSystem extends Party {
 	 * @param name the name of the software system.
 	 */
 	public SoftwareSystem(String name) {
-		super(new Long(name.hashCode()));
+		super(Long.valueOf(name.hashCode()));
 
 		this.name = name;
 	}

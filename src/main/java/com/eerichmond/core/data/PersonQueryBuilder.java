@@ -2,7 +2,7 @@ package com.eerichmond.core.data;
 
 import com.eerichmond.core.domain.HierarchyLevel;
 import com.eerichmond.core.domain.QPerson;
-import com.eerichmond.core.security.GlobalRole;
+import com.eerichmond.core.security.AssociationRoles;
 import com.eerichmond.core.security.QAssociation;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.expr.BooleanExpression;
@@ -132,7 +132,7 @@ public class PersonQueryBuilder {
 		if (criteria.highestOrgHierarchyLevel().compareTo(HierarchyLevel.TWIG) >= 0) {
 			associationClause = associationClause
 				.or(
-					PARENT_ORG_ASSOCIATION.role.eq(GlobalRole.SUBUNIT.asRoleImpl())
+					PARENT_ORG_ASSOCIATION.role.eq(AssociationRoles.SUBUNIT.asRoleImpl())
 						.and(PARENT_ORG_ASSOCIATION.organization.in(criteria.getOrganizations()))
 				);
 		}
@@ -140,7 +140,7 @@ public class PersonQueryBuilder {
 		if (criteria.highestOrgHierarchyLevel().compareTo(HierarchyLevel.BRANCH) >= 0) {
 			associationClause = associationClause
 				.or(
-					PARENT_PARENT_ORG_ASSOCIATION.role.eq(GlobalRole.SUBUNIT.asRoleImpl())
+					PARENT_PARENT_ORG_ASSOCIATION.role.eq(AssociationRoles.SUBUNIT.asRoleImpl())
 						.and(PARENT_PARENT_ORG_ASSOCIATION.organization.in(criteria.getOrganizations()))
 				);
 		}

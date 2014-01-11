@@ -1,6 +1,6 @@
 package com.eerichmond.core.domain;
 
-import com.eerichmond.core.security.GlobalRole;
+import com.eerichmond.core.security.AssociationRoles;
 import org.hibernate.annotations.Table;
 
 import javax.persistence.Cacheable;
@@ -52,7 +52,7 @@ public abstract class Organization extends Party implements Comparable<Organizat
 	 * @param clazz the class type of the parent organization to return.
 	 */
 	public <T extends Organization> T findParentUnitByType(Class<? extends Organization> clazz) {
-		Set<T> parentUnits = findAssociationsByRole(GlobalRole.SUBUNIT);
+		Set<T> parentUnits = findAssociationsByRole(AssociationRoles.SUBUNIT);
 
 		for ( T org : parentUnits ) {
 			if (clazz.isAssignableFrom(org.getClass())) {

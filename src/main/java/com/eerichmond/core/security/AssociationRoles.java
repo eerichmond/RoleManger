@@ -6,12 +6,11 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.Collection;
 
-public enum GlobalRole implements Role {
+public enum AssociationRoles implements Role {
 	EMPLOYEE,
 	FACULTY,
 	STUDENT,
 	SUBUNIT,
-	SUPERVISOR,
 	SYSTEM_ADMIN,
 	SYSTEM_TESTER,
 	USER							// Generic system user

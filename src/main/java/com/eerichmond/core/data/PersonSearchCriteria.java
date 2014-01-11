@@ -4,7 +4,7 @@ import com.eerichmond.core.domain.BaseObject;
 import com.eerichmond.core.domain.BusinessKey;
 import com.eerichmond.core.domain.HierarchyLevel;
 import com.eerichmond.core.domain.Organization;
-import com.eerichmond.core.security.GlobalRole;
+import com.eerichmond.core.security.AssociationRoles;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
@@ -19,7 +19,7 @@ public class PersonSearchCriteria extends BaseObject<BusinessKey> {
 	private String studentId;
 	private String firstName;
 	private String lastName;
-	private GlobalRole role;
+	private AssociationRoles role;
 	private Set<Organization> organizations = Sets.newHashSet();
 	
 	// If you don't know if it is a first or last name use the name fragment
@@ -150,8 +150,8 @@ public class PersonSearchCriteria extends BaseObject<BusinessKey> {
 	}
 
 	@BusinessKey
-	public GlobalRole getRole() { return role; }
-	public PersonSearchCriteria setRole(GlobalRole role) { this.role = role; return this; }
+	public AssociationRoles getRole() { return role; }
+	public PersonSearchCriteria setRole(AssociationRoles role) { this.role = role; return this; }
 
 	@BusinessKey
 	public Set<Organization> getOrganizations() { return this.organizations; }

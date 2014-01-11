@@ -10,7 +10,7 @@ import com.google.common.collect.Sets;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.eerichmond.core.security.GlobalRole.SUBUNIT;
+import static com.eerichmond.core.security.AssociationRoles.SUBUNIT;
 
 public class RoleOperand implements RoleExpression {
 

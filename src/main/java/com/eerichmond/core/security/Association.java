@@ -2,6 +2,7 @@ package com.eerichmond.core.security;
 
 import com.eerichmond.core.codes.ActiveStatusCode;
 import com.eerichmond.core.domain.AuditableEntity;
+import com.eerichmond.core.domain.Organization;
 import com.eerichmond.core.domain.Party;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
@@ -12,25 +13,24 @@ import org.joda.time.DateTime;
 import javax.persistence.*;
 
 @Entity
-@Table(name="PARTY_TO_ROLE")
 public class Association extends AuditableEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(generator = "PARTY_TO_ROLE_SEQ", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "ASSOCIATION_SEQ", strategy = GenerationType.SEQUENCE)
 	@GenericGenerator(
-		name = "PARTY_TO_ROLE_SEQ",
+		name = "ASSOCIATION_SEQ",
 		strategy = "sequence",
-		parameters = @Parameter(name="sequence", value="PARTY_TO_ROLE_SEQ")
+		parameters = @Parameter(name="sequence", value="ASSOCIATION_SEQ")
 	)
 	private Long id;
 	
-	@ManyToOne @JoinColumn(name="CHILD_PARTY_ID")
-	private Party childParty;
+	@ManyToOne
+	private Party member;
 	
-	@ManyToOne @JoinColumn(name="PARENT_PARTY_ID")
-	private Party parentParty;
+	@ManyToOne
+	private Organization organization;
 	
 	@Embedded
 	private RoleImpl role;
@@ -51,20 +51,20 @@ public class Association extends AuditableEntity<Long> {
 	
 	/**
 	 * Constructor for testing. Does not load up the record.
-	 * @param childParty the child party in the association
-	 * @param parentParty the parent party in the association
+	 * @param member the member of the association
+	 * @param organization the organization that member is associated with
 	 * @param role the role of the association
 	 */
-	public Association(Party childParty, Party parentParty, Role role) {
+	public Association(Party member, Organization organization, Role role) {
 		super();
 		
-		Preconditions.checkNotNull(childParty);
-		Preconditions.checkNotNull(parentParty);
+		Preconditions.checkNotNull(member);
+		Preconditions.checkNotNull(organization);
 		Preconditions.checkNotNull(role);
 
-		this.id = (long) (childParty.hashCode() + parentParty.hashCode() + role.hashCode());
-		this.childParty = childParty;
-		this.parentParty = parentParty;
+		this.id = (long) (member.hashCode() + organization.hashCode() + role.hashCode());
+		this.member = member;
+		this.organization = organization;
 		this.role = new RoleImpl(role);
 	}
 	
@@ -73,13 +73,13 @@ public class Association extends AuditableEntity<Long> {
 	public Long getId() { return id; }
 
 	@SuppressWarnings("unchecked")
-	public <T extends Party> T getChildParty() { return (T)childParty; }
-	public void setChildParty(Party childParty) { this.childParty = childParty; }
+	public <T extends Party> T getMember() { return (T) member; }
+	public void setMember(Party member) { this.member = member; }
 
 	@JsonProperty
 	@SuppressWarnings("unchecked")
-	public <T extends Party> T getParentParty() { return (T)parentParty; }
-	public void setParentParty(Party parentParty) { this.parentParty = parentParty; }
+	public <T extends Organization> T getOrganization() { return (T) organization; }
+	public void setOrganization(Organization organization) { this.organization = organization; }
 
 	@JsonProperty
 	public Role getRole() { return role; }
@@ -102,9 +102,9 @@ public class Association extends AuditableEntity<Long> {
 			.append(getRole().getDescription().substring(0,1).toUpperCase())
 			.append(getRole().getDescription().substring(1).toLowerCase());
 		
-		if (getParentParty() != null) {
+		if (getOrganization() != null) {
 			builder.append(" of ")
-				.append(getParentParty().getName());
+				.append(getOrganization().getName());
 		}
 		
 		return builder.toString();

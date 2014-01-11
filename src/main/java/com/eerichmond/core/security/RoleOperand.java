@@ -1,6 +1,7 @@
 package com.eerichmond.core.security;
 
 import com.eerichmond.core.codes.BooleanOperator;
+import com.eerichmond.core.domain.Organization;
 import com.eerichmond.core.domain.Party;
 import com.eerichmond.core.utils.CollectionUtils;
 import com.google.common.base.Preconditions;
@@ -14,18 +15,18 @@ import static com.eerichmond.core.security.GlobalRole.SUBUNIT;
 public class RoleOperand implements RoleExpression {
 
 	private Role roleToEvaluate;
-	private Set<Party> partiesToEvaluate = Sets.newHashSet();
+	private Set<Organization> organizationsToEvaluate = Sets.newHashSet();
 	
-	public RoleOperand(Role roleToEvaluate, Party partyToEvaluate) {
-		this(roleToEvaluate, Sets.newHashSet(partyToEvaluate));
+	public RoleOperand(Role roleToEvaluate, Organization orgToEvaluate) {
+		this(roleToEvaluate, Sets.newHashSet(orgToEvaluate));
 	}
 	
-	public RoleOperand(Role roleToEvaluate, Collection<? extends Party> partiesToEvaluate) {
+	public RoleOperand(Role roleToEvaluate, Collection<? extends Organization> organizationsToEvaluate) {
 		Preconditions.checkNotNull(roleToEvaluate);
-		Preconditions.checkNotNull(partiesToEvaluate);
+		Preconditions.checkNotNull(organizationsToEvaluate);
 
 		this.roleToEvaluate = roleToEvaluate;
-		this.partiesToEvaluate.addAll(partiesToEvaluate);
+		this.organizationsToEvaluate.addAll(organizationsToEvaluate);
 	}
 	
 	/**
@@ -37,21 +38,21 @@ public class RoleOperand implements RoleExpression {
 		boolean matchFound = false;
 		
 		for (Association association : associations) {
-			Party parentParty = association.getParentParty();
+			Organization org = association.getOrganization();
 			
-			if (parentParty == null) {
+			if (org == null) {
 				throw new IllegalArgumentException("Role associations must have a to party");
 			}
 			
 			if (association.getRole().getCode().equals(roleToEvaluate.getCode())) {
-				if (partiesToEvaluate.contains(parentParty)) {
+				if (organizationsToEvaluate.contains(org)) {
 					matchFound = true;
 					break;
 				}
 				else {
-					// If the parentParty does not exist in the partiesToEvaluate see if the parentParty is a subunit
-					// of one of the partiesToEvaluate.
-					matchFound = isASubunit(parentParty);
+					// If the org does not exist in the organizationsToEvaluate see if the org is a subunit
+					// of one of the organizationsToEvaluate.
+					matchFound = isASubunit(org);
 					
 					if (matchFound) {
 						break;
@@ -65,14 +66,14 @@ public class RoleOperand implements RoleExpression {
 
 	/**
 	 * If the to party is a subunit of one of the parties to evaluate return true.
-	 * @param parentParty the parent party to see if it is a subunit of the the evaluate parties.
+	 * @param organization the organization to see if it is a subunit of the evaluated organizations.
 	 */
-	private boolean isASubunit(Party parentParty) {
+	private boolean isASubunit(Organization organization) {
 		boolean matchFound = false;
 		
-		for (Party partyToEvaluate : partiesToEvaluate) {
-			matchFound = parentParty
-				.isA( SUBUNIT.of(partyToEvaluate) )
+		for (Organization orgToEvaluate : organizationsToEvaluate) {
+			matchFound = organization
+				.isA( SUBUNIT.of(orgToEvaluate) )
 				.isTrue();
 			
 			if (matchFound) {
@@ -124,10 +125,10 @@ public class RoleOperand implements RoleExpression {
 		
 		builder.append(this.roleToEvaluate.getDescription().toLowerCase());
 		
-		if (!this.partiesToEvaluate.isEmpty()) {
+		if (!this.organizationsToEvaluate.isEmpty()) {
 			Set<String> names = Sets.newHashSet();
 			
-			for (Party party : this.partiesToEvaluate) {
+			for (Party party : this.organizationsToEvaluate) {
 				names.add(party.getName());
 			}
 			

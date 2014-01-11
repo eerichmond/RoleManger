@@ -3,7 +3,7 @@ package com.eerichmond.core.data;
 import com.eerichmond.core.domain.HierarchyLevel;
 import com.eerichmond.core.domain.QPerson;
 import com.eerichmond.core.security.GlobalRole;
-import com.eerichmond.core.security.QRoleRelationship;
+import com.eerichmond.core.security.QAssociation;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.expr.BooleanExpression;
 import org.slf4j.Logger;
@@ -19,9 +19,9 @@ public class PersonQueryBuilder {
 	private static final Logger LOG = LoggerFactory.getLogger(PersonQueryBuilder.class);
 	
     public final static QPerson Q_PERSON = QPerson.person;
-	public final static QRoleRelationship ORG_ASSOCIATION = new QRoleRelationship("association");
-	public final static QRoleRelationship PARENT_ORG_ASSOCIATION = new QRoleRelationship("parentOrgAssociation");
-	public final static QRoleRelationship PARENT_PARENT_ORG_ASSOCIATION = new QRoleRelationship("parentParentOrgAssociation");
+	public final static QAssociation ORG_ASSOCIATION = new QAssociation("association");
+	public final static QAssociation PARENT_ORG_ASSOCIATION = new QAssociation("parentOrgAssociation");
+	public final static QAssociation PARENT_PARENT_ORG_ASSOCIATION = new QAssociation("parentParentOrgAssociation");
 
 	private final PersonSearchCriteria criteria;
 	
@@ -32,17 +32,17 @@ public class PersonQueryBuilder {
 	public JPAQuery query(EntityManager em) {
 		JPAQuery query = new JPAQuery(em)
 			.from(Q_PERSON)
-			.innerJoin(Q_PERSON.relationships, ORG_ASSOCIATION);
+			.innerJoin(Q_PERSON.associations, ORG_ASSOCIATION);
 
-		// If an ID was NOT specified join to the person's group associations' parent units to help filter down the population.
+		// If an ID was NOT specified join to the person's organization associations' parent units to help filter down the population.
 		// Also multiple records could be returned, so order by last name and first name.
 		if (isBlank(criteria.getEmployeeId()) && isBlank(criteria.getStudentId())) {
 			if (criteria.highestOrgHierarchyLevel().compareTo(HierarchyLevel.TWIG) >= 0) {
-				query.innerJoin(ORG_ASSOCIATION.parentParty.relationships, PARENT_ORG_ASSOCIATION);
+				query.innerJoin(ORG_ASSOCIATION.organization.associations, PARENT_ORG_ASSOCIATION);
 			}
 
 			if (criteria.highestOrgHierarchyLevel().compareTo(HierarchyLevel.BRANCH) >= 0) {
-				query.innerJoin(PARENT_ORG_ASSOCIATION.parentParty.relationships, PARENT_PARENT_ORG_ASSOCIATION);
+				query.innerJoin(PARENT_ORG_ASSOCIATION.organization.associations, PARENT_PARENT_ORG_ASSOCIATION);
 			}
 
 			query.orderBy(Q_PERSON.lastNameSearchable.asc(), Q_PERSON.firstNameSearchable.asc());
@@ -127,13 +127,13 @@ public class PersonQueryBuilder {
 	}
 
 	private BooleanExpression associationClause() {
-		BooleanExpression associationClause = ORG_ASSOCIATION.parentParty.in(criteria.getOrganizations());
+		BooleanExpression associationClause = ORG_ASSOCIATION.organization.in(criteria.getOrganizations());
 
 		if (criteria.highestOrgHierarchyLevel().compareTo(HierarchyLevel.TWIG) >= 0) {
 			associationClause = associationClause
 				.or(
 					PARENT_ORG_ASSOCIATION.role.eq(GlobalRole.SUBUNIT.asRoleImpl())
-						.and(PARENT_ORG_ASSOCIATION.parentParty.in(criteria.getOrganizations()))
+						.and(PARENT_ORG_ASSOCIATION.organization.in(criteria.getOrganizations()))
 				);
 		}
 
@@ -141,7 +141,7 @@ public class PersonQueryBuilder {
 			associationClause = associationClause
 				.or(
 					PARENT_PARENT_ORG_ASSOCIATION.role.eq(GlobalRole.SUBUNIT.asRoleImpl())
-						.and(PARENT_PARENT_ORG_ASSOCIATION.parentParty.in(criteria.getOrganizations()))
+						.and(PARENT_PARENT_ORG_ASSOCIATION.organization.in(criteria.getOrganizations()))
 				);
 		}
 

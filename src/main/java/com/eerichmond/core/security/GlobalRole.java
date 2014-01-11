@@ -1,6 +1,6 @@
 package com.eerichmond.core.security;
 
-import com.eerichmond.core.domain.Party;
+import com.eerichmond.core.domain.Organization;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.text.WordUtils;
 
@@ -27,34 +27,34 @@ public enum GlobalRole implements Role {
 	
 	/**
 	 * Determines if the user has the role for the specified party.
-	 * @param partyToEvaluate the party to evaluate if the person is a role in
+	 * @param orgToEvaluate the organization to evaluate if the person is a role in
 	 */
-	public RoleExpression of(Party partyToEvaluate) {
-		return new RoleOperand(this, partyToEvaluate);
+	public RoleExpression of(Organization orgToEvaluate) {
+		return new RoleOperand(this, orgToEvaluate);
 	}
 	
 	/**
 	 * Determines if the user has the role for the specified party. Synonym for of().
-	 * @param partyToEvaluate the party to evaluate if the person is a role in
+	 * @param orgToEvaluate the organization to evaluate if the person is a role in
 	 */
-	public RoleExpression under(Party partyToEvaluate) {
-		return this.of(partyToEvaluate);
+	public RoleExpression under(Organization orgToEvaluate) {
+		return this.of(orgToEvaluate);
 	}
 	
 	/**
-	 * Determines if the user has the role for any of the specified parties.
-	 * @param parties the parties to look for roles for
+	 * Determines if the user has the role for any of the specified organizations.
+	 * @param organizations the organizations to look for roles for
 	 */
-	public RoleExpression ofAny(Party... parties) {
-		return ofAny(Lists.newArrayList(parties));
+	public RoleExpression ofAny(Organization... organizations) {
+		return ofAny(Lists.newArrayList(organizations));
 	}
 	
 	/**
-	 * Determines if the user has the role for any of the specified parties.
-	 * @param parties the parties to look for roles for
+	 * Determines if the user has the role for any of the specified organizations.
+	 * @param organizations the organizations to look for roles for
 	 */
-	public RoleExpression ofAny(Collection<? extends Party> parties) {
-		return new RoleOperand(this, parties);
+	public RoleExpression ofAny(Collection<? extends Organization> organizations) {
+		return new RoleOperand(this, organizations);
 	}
 
 	public RoleImpl asRoleImpl() {

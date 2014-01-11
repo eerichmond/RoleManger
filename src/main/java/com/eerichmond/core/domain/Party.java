@@ -23,7 +23,7 @@ public abstract class Party extends AuditableEntity<Long> {
 	@JsonProperty
 	private Long id;
 	
-	@OneToMany(mappedBy="childParty")
+	@OneToMany(mappedBy="member")
 	private Set<Association> associations = Sets.newHashSet();
 
 	@JsonProperty
@@ -61,9 +61,9 @@ public abstract class Party extends AuditableEntity<Long> {
 		return activeAssociations;
 	}
 
-	public Party addAssociation(Role role, Party... parentParties) {
-		for (Party party : parentParties) {
-			this.associations.add(new Association(this, party, role));
+	public Party addAssociation(Role role, Organization... organizations) {
+		for (Organization org : organizations) {
+			this.associations.add(new Association(this, org, role));
 		}
 
 		return this;
@@ -76,12 +76,12 @@ public abstract class Party extends AuditableEntity<Long> {
 	 * @throws ClassCastException if the associated party doesn't match type T
 	 * @return a set of parties cast as type T
 	 */
-	public <T extends Party> Set<T> findAssociationsByRole(Role... rolesToSearchFor) {
+	public <T extends Organization> Set<T> findAssociationsByRole(Role... rolesToSearchFor) {
 		return findAssociationsByTypeAndRole(null, rolesToSearchFor);
 	}
 
 	/**
-	 * Takes the return type class and a Role interface and returns the parties for any associations that match. Uses
+	 * Takes the return type class and a Role interface and returns the organizations for any associations that match. Uses
 	 * the getCode() method on the Role interface because role can be any number of implementations which are not
 	 * necessarily equal.
 	 * @param returnType the return type T or null if the return type doesn't matter
@@ -90,7 +90,7 @@ public abstract class Party extends AuditableEntity<Long> {
 	 * @return a set of parties cast as type T
 	 */
 	@SuppressWarnings("unchecked")
-	public <T extends Party> Set<T> findAssociationsByTypeAndRole(Class<T> returnType, Role... rolesToSearchFor) {
+	public <T extends Organization> Set<T> findAssociationsByTypeAndRole(Class<T> returnType, Role... rolesToSearchFor) {
 		Preconditions.checkNotNull(rolesToSearchFor);
 
 		Set<String> roleCodesToSearchFor = Sets.newHashSet();
@@ -105,14 +105,14 @@ public abstract class Party extends AuditableEntity<Long> {
 			String roleCode = association.getRole().getCode();
 
 			if (roleCodesToSearchFor.contains(roleCode)) {
-				Party parentParty = association.getParentParty();
+                Organization organization = association.getOrganization();
 
 				// If a return type was specified make sure the parent party matches the class of the return value
 				// otherwise return any matching parties.
-				if ( returnType == null || returnType.isAssignableFrom(parentParty.getClass()) ) {
-					T group = (T) parentParty;
+				if ( returnType == null || returnType.isAssignableFrom(organization.getClass()) ) {
+					T org = (T) organization;
 
-					parties.add(group);
+					parties.add(org);
 				}
 			}
 		}

@@ -1,20 +1,18 @@
 package com.eerichmond.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Department")
 @Cacheable
 public class Department extends Organization {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="DEPT_CODE")
+	@NotBlank
 	private String deptCode;
 	
 	/**

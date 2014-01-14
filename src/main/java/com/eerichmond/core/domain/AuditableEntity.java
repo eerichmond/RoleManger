@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @MappedSuperclass
@@ -16,13 +17,16 @@ public abstract class AuditableEntity<T extends Serializable> extends BaseEntity
 	
 	private static final long serialVersionUID = 1L;
 
+    @NotNull
 	private DateTime createdDate;
+
+    @NotNull
 	private DateTime lastModifiedDate;
 	
-	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn
+	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn @NotNull
 	private Party createdBy;
 	
-	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn
+	@ManyToOne(fetch=FetchType.LAZY) @JoinColumn @NotNull
 	private Party lastModifiedBy;
 
 	public abstract T getId();

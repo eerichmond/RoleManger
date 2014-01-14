@@ -2,20 +2,17 @@ package com.eerichmond.core.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Table;
 
-import javax.persistence.*;
+import javax.persistence.Cacheable;
+import javax.persistence.Entity;
 
 @Entity
-@SecondaryTable(name="SOFTWARE_SYSTEM")
-@Table(appliesTo="SOFTWARE_SYSTEM", optional=false)	// Need this for force an inner join
-@DiscriminatorValue("SoftwareSystem")
 @Cacheable
 public class SoftwareSystem extends Party {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(table="SOFTWARE_SYSTEM") @JsonProperty
+	@JsonProperty
 	private String name;
 	
 	@Override

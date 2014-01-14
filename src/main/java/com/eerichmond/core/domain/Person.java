@@ -1,57 +1,39 @@
 package com.eerichmond.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.Sets;
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
-import org.hibernate.annotations.Table;
+import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
-import java.util.SortedSet;
+import javax.persistence.Cacheable;
+import javax.persistence.Entity;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Entity
-@DiscriminatorValue("Person")
-@SecondaryTable(name="PERSON")
-@Table(appliesTo="PERSON", optional=false)	// Need this for force an inner join
 @Cacheable
 public class Person extends Party {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(table="PERSON") @JsonProperty
 	private String studentId;
 	
-	@Column(table="PERSON") @JsonProperty
 	private String employeeId;
-	
-	@Column(table="PERSON") @JsonProperty
-	private String firstName;
-	
-	@Column(table="PERSON") @JsonProperty
-	private String middleName;
-	
-	@Column(table="PERSON") @JsonProperty
-	private String lastName;
-	
-	@Column(table="PERSON") @JsonProperty
-	private String firstNameSearchable;
-	
-	@Column(table="PERSON") @JsonProperty
-	private String lastNameSearchable;
-	
-	@Column(table="PERSON") @JsonProperty
-	private String email;
 
-	@ElementCollection(fetch=FetchType.LAZY)
-	@CollectionTable(
-		name = "person_to_login_ucd",
-		joinColumns = @JoinColumn(name="person_id")
-	)
-	@Column(name="login_id")
-	@Sort(type=SortType.NATURAL)
-	private SortedSet<String> loginIds = Sets.newTreeSet();
+    @NotBlank
+	private String firstName;
+
+	private String middleName;
+
+    @NotBlank
+	private String lastName;
+
+    @NotBlank
+	private String firstNameSearchable;
+
+    @NotBlank
+	private String lastNameSearchable;
+
+	private String loginId;
+
+	private String email;
 	
 	/**
 	 * Empty constructor for proxy/ORM libraries.
@@ -119,14 +101,14 @@ public class Person extends Party {
 	 * The student's name in a friendly format: first last
 	 */
 	public String getFriendlyName() { return String.format("%s %s", getFirstName(), getLastName()); }
-	
+
 	/**
 	 * Non-public first name property used to improve the search speed by
 	 * hitting the Banner optimized first name field.
 	 */
 	String getFirstNameSearchable() { return firstNameSearchable; }
 	void setFirstNameSearchable(String firstNameSearchable) { this.firstNameSearchable = firstNameSearchable; }
-	
+
 	/**
 	 * Non-public last name property used to improve the search speed by
 	 * hitting the Banner optimized last name field.
@@ -137,8 +119,8 @@ public class Person extends Party {
 	public String getEmail() { return email; }
 	void setEmail(String email) { this.email = email; }
 	
-	public SortedSet<String> getLoginIds() { return loginIds; }
-	void setLoginIds(SortedSet<String> loginIds) { this.loginIds = loginIds; }
+	public String getLoginId() { return loginId; }
+	void setLoginId(String loginId) { this.loginId = loginId; }
 	
 	@Override
 	public String toString() { return getFullName(); }

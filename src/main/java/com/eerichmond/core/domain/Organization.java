@@ -1,28 +1,24 @@
 package com.eerichmond.core.domain;
 
-import com.eerichmond.core.security.AssociationRoles;
-import org.hibernate.annotations.Table;
+import com.eerichmond.core.security.AssociationRole;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Cacheable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.SecondaryTable;
 import java.util.Set;
 
 @Entity
-@SecondaryTable(name="ORGANIZATIONS")
-@Table(appliesTo="ORGANIZATIONS", optional=false)	// Need this for force an inner join
 @Cacheable
 public abstract class Organization extends Party implements Comparable<Organization> {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Column(table="ORGANIZATIONS")
+
+    @NotBlank
 	private String name;
 
-	@Column(table="ORGANIZATIONS")
+    @NotBlank
 	private String nameSearchable;
-	
+
 	/**
 	 * Empty constructor for proxy/ORM libraries.
 	 */
@@ -52,7 +48,7 @@ public abstract class Organization extends Party implements Comparable<Organizat
 	 * @param clazz the class type of the parent organization to return.
 	 */
 	public <T extends Organization> T findParentUnitByType(Class<? extends Organization> clazz) {
-		Set<T> parentUnits = findAssociationsByRole(AssociationRoles.SUBUNIT);
+		Set<T> parentUnits = findAssociationsByRole(AssociationRole.SUBUNIT);
 
 		for ( T org : parentUnits ) {
 			if (clazz.isAssignableFrom(org.getClass())) {

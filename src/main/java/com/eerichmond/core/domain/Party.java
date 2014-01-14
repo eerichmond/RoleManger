@@ -13,13 +13,13 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Inheritance
-@DiscriminatorColumn(name="party_type")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Party extends AuditableEntity<Long> {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonProperty
 	private Long id;
 	

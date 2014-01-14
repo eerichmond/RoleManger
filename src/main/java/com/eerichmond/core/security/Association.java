@@ -6,8 +6,6 @@ import com.eerichmond.core.domain.Organization;
 import com.eerichmond.core.domain.Party;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -18,12 +16,7 @@ public class Association extends AuditableEntity<Long> {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(generator = "ASSOCIATION_SEQ", strategy = GenerationType.SEQUENCE)
-	@GenericGenerator(
-		name = "ASSOCIATION_SEQ",
-		strategy = "sequence",
-		parameters = @Parameter(name="sequence", value="ASSOCIATION_SEQ")
-	)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@ManyToOne

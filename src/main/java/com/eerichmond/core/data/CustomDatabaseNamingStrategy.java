@@ -2,7 +2,7 @@ package com.eerichmond.core.data;
 
 import org.hibernate.cfg.ImprovedNamingStrategy;
 
-public class AllCapsNamingStrategy extends ImprovedNamingStrategy {
+public class CustomDatabaseNamingStrategy extends ImprovedNamingStrategy {
 	
 	private static final long serialVersionUID = 1L;
 

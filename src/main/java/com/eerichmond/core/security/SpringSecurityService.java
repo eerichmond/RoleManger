@@ -27,7 +27,7 @@ public class SpringSecurityService implements AuditorAware<Person> {
 	public Person getCurrentAuditor() {
 		Authentication auth = getAuthentication();
 		
-		return auth != null ? personRepository.findByLoginIds(auth.getName()) : null;
+		return auth != null ? personRepository.findByLoginId(auth.getName()) : null;
 	}
 
 	public Person getCurrentUser() { return getCurrentAuditor(); }

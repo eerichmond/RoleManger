@@ -17,12 +17,12 @@ public interface PersonRepository extends CrudRepository<Person, Long>, PersonRe
 	 * gets caught in an infinite loop.
 	 * 
 	 * Eg. Save of AuditableEntity -> Hibernate flushes -> calls AuditingEntityListener ->
-	 * calls findByLoginIds -> triggers a flush -> calls AuditingEntityListener ->
-	 * calls findByLoginIds -> triggers a flush -> ... 
+	 * calls findByLoginId -> triggers a flush -> calls AuditingEntityListener ->
+	 * calls findByLoginId -> triggers a flush -> ...
 	 * @param loginId the login ID to search for
 	 */
 	@QueryHints(@QueryHint(name="org.hibernate.flushMode", value="COMMIT"))
-	Person findByLoginIds(String loginId);
+	Person findByLoginId(String loginId);
 
 	Person findByStudentId(String studentId);
 	

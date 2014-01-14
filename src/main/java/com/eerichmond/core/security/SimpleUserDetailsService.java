@@ -30,7 +30,7 @@ public class SimpleUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-		Person person = personRepository.findByLoginIds(username);
+		Person person = personRepository.findByLoginId(username);
 
 		UserDetails userDetails = new UserDetailsImpl(username, buildGrantedAuthorities(person));
 

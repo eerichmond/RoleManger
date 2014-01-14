@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence
+        xmlns="http://java.sun.com/xml/ns/persistence"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence"
+        version="2.0">
+
+    <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+        <class>com.eerichmond.core.domain.Department</class>
+        <class>com.eerichmond.core.domain.Institution</class>
+        <class>com.eerichmond.core.domain.Organization</class>
+        <class>com.eerichmond.core.domain.Party</class>
+        <class>com.eerichmond.core.domain.Person</class>
+        <class>com.eerichmond.core.domain.SoftwareSystem</class>
+
+        <class>com.eerichmond.core.security.Association</class>
+    </persistence-unit>
+
+
+</persistence>

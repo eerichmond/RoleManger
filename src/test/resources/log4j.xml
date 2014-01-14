@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration>
+
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+ 		<param name="Threshold" value="trace" />
+		
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %c - %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="com.eerichmond">
+		<level value="debug" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+    <category name="org.hibernate.SQL">
+		<priority value="debug" />
+	</category>
+
+ 	<!--Uncomment for logging JDBC parameters and more-->
+<!--	<category name="org.hibernate">
+		<priority value="trace" />
+	</category>-->
+
+	<category name="org.hibernate.cache">
+		<priority value="debug" />
+	</category>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="consoleAppender" />
+	</root>
+
+</log4j:configuration>

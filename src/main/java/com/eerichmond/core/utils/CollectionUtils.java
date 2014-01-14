@@ -1,11 +1,31 @@
 package com.eerichmond.core.utils;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
+import java.util.Collection;
 import java.util.Iterator;
 
 public final class CollectionUtils {
 	
 	private CollectionUtils() {}
-	
+
+    /**
+     * Converts a collection of objects into a collection of strings by calling toString on each object.
+     * @param items the objects to convert
+     * @return A collection of strings
+     */
+    public static Collection<String> convertToStrings(Iterable<?> items) {
+        Iterable<String> codes = Iterables.transform(items, new Function<Object, String>() {
+            public String apply(Object item) {
+                return item.toString();
+            }
+        });
+
+        return Lists.newArrayList(codes);
+    }
+
 	/**
 	 * Converts a collection of objects into a human readable list. Conjunction defaults to
 	 * "and". Example

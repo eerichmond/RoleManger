@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.eerichmond.core.domain</OriginalElement>
+  <nodes>
+    <node x="134.16666666666666" y="234.0">com.eerichmond.core.security.Association</node>
+    <node x="5.166666666666657" y="234.0">com.eerichmond.core.security.AssociationRole</node>
+    <node x="295.5" y="400.0">com.eerichmond.core.domain.Person</node>
+    <node x="169.20833333333334" y="0.0">com.eerichmond.core.domain.BaseObject</node>
+    <node x="18.666666666666657" y="78.0">com.eerichmond.core.security.Role</node>
+    <node x="162.5" y="400.0">com.eerichmond.core.domain.SoftwareSystem</node>
+    <node x="209.87731481481484" y="322.0">com.eerichmond.core.domain.Party</node>
+    <node x="217.33333333333334" y="78.0">com.eerichmond.core.domain.BaseEntity</node>
+    <node x="47.5" y="400.0">com.eerichmond.core.domain.Organization</node>
+    <node x="206.33333333333334" y="156.0">com.eerichmond.core.domain.AuditableEntity</node>
+    <node x="0.0" y="478.0">com.eerichmond.core.domain.Institution</node>
+    <node x="111.33333333333334" y="156.0">com.eerichmond.core.security.RoleImpl</node>
+    <node x="103.0" y="478.0">com.eerichmond.core.domain.Department</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.eerichmond.core.security.RoleImpl" target="com.eerichmond.core.security.Role">
+      <point x="-18.75" y="-14.0" />
+      <point x="130.08333333333334" y="131.0" />
+      <point x="59.91666666666666" y="131.0" />
+      <point x="13.75" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.Person" target="com.eerichmond.core.domain.Party">
+      <point x="0.0" y="-14.0" />
+      <point x="329.0" y="380.0" />
+      <point x="259.87731481481484" y="380.0" />
+      <point x="20.0" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.Party" target="com.eerichmond.core.domain.AuditableEntity">
+      <point x="24.0" y="-14.0" />
+      <point x="263.87731481481484" y="302.0" />
+      <point x="270.83333333333337" y="302.0" />
+      <point x="270.83333333333337" y="209.0" />
+      <point x="295.5" y="209.0" />
+      <point x="35.66666666666663" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.AuditableEntity" target="com.eerichmond.core.domain.Party">
+      <point x="0.0" y="14.0" />
+      <point x="259.83333333333337" y="292.0" />
+      <point x="251.87731481481484" y="292.0" />
+      <point x="12.0" y="-14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.security.RoleImpl" target="com.eerichmond.core.domain.BaseObject">
+      <point x="18.75" y="-14.0" />
+      <point x="167.58333333333334" y="53.0" />
+      <point x="191.45833333333334" y="53.0" />
+      <point x="-22.25" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.Organization" target="com.eerichmond.core.domain.Party">
+      <point x="23.75" y="-14.0" />
+      <point x="118.75" y="370.0" />
+      <point x="219.87731481481484" y="370.0" />
+      <point x="-20.0" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.security.Association" target="com.eerichmond.core.domain.AuditableEntity">
+      <point x="29.333333333333314" y="-14.0" />
+      <point x="207.49999999999997" y="209.0" />
+      <point x="224.16666666666666" y="209.0" />
+      <point x="-35.666666666666686" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.security.Association" target="com.eerichmond.core.domain.Organization">
+      <point x="-33.0" y="14.0" />
+      <point x="145.16666666666666" y="302.0" />
+      <point x="71.25" y="302.0" />
+      <point x="-23.75" y="-14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.Department" target="com.eerichmond.core.domain.Organization">
+      <point x="0.0" y="-14.0" />
+      <point x="148.5" y="453.0" />
+      <point x="118.75" y="453.0" />
+      <point x="23.75" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.security.AssociationRole" target="com.eerichmond.core.security.RoleImpl">
+      <point x="27.25" y="-14.0" />
+      <point x="86.91666666666666" y="209.0" />
+      <point x="123.83333333333334" y="209.0" />
+      <point x="-25.0" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.security.Association" target="com.eerichmond.core.domain.Party">
+      <point x="33.0" y="14.0" />
+      <point x="211.16666666666666" y="282.0" />
+      <point x="239.87731481481484" y="282.0" />
+      <point x="0.0" y="-14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.AuditableEntity" target="com.eerichmond.core.domain.BaseEntity">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.Institution" target="com.eerichmond.core.domain.Organization">
+      <point x="0.0" y="-14.0" />
+      <point x="41.5" y="453.0" />
+      <point x="71.25" y="453.0" />
+      <point x="-23.75" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.security.AssociationRole" target="com.eerichmond.core.security.Role">
+      <point x="-27.25" y="-14.0" />
+      <point x="-13.75" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.SoftwareSystem" target="com.eerichmond.core.domain.Party">
+      <point x="0.0" y="-14.0" />
+      <point x="219.0" y="380.0" />
+      <point x="239.87731481481484" y="380.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.Party" target="com.eerichmond.core.security.Association">
+      <point x="-24.0" y="-14.0" />
+      <point x="215.87731481481484" y="302.0" />
+      <point x="167.16666666666666" y="302.0" />
+      <point x="-11.0" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.domain.BaseEntity" target="com.eerichmond.core.domain.BaseObject">
+      <point x="0.0" y="-14.0" />
+      <point x="259.83333333333337" y="53.0" />
+      <point x="235.95833333333334" y="53.0" />
+      <point x="22.25" y="14.0" />
+    </edge>
+    <edge source="com.eerichmond.core.security.Association" target="com.eerichmond.core.security.RoleImpl">
+      <point x="0.0" y="-14.0" />
+      <point x="178.16666666666666" y="209.0" />
+      <point x="173.83333333333334" y="209.0" />
+      <point x="25.0" y="14.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="471.0" y="360.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

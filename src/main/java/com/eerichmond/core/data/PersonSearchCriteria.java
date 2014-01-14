@@ -4,7 +4,7 @@ import com.eerichmond.core.domain.BaseObject;
 import com.eerichmond.core.domain.BusinessKey;
 import com.eerichmond.core.domain.HierarchyLevel;
 import com.eerichmond.core.domain.Organization;
-import com.eerichmond.core.security.AssociationRoles;
+import com.eerichmond.core.security.AssociationRole;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
@@ -19,7 +19,7 @@ public class PersonSearchCriteria extends BaseObject<BusinessKey> {
 	private String studentId;
 	private String firstName;
 	private String lastName;
-	private AssociationRoles role;
+	private AssociationRole role;
 	private Set<Organization> organizations = Sets.newHashSet();
 	
 	// If you don't know if it is a first or last name use the name fragment
@@ -114,8 +114,8 @@ public class PersonSearchCriteria extends BaseObject<BusinessKey> {
 			}
 		}
 		else if (fullName.contains(" ")) {
-			setFirstName(fullName.substring(0, fullName.indexOf(" ")));
-			setLastName(fullName.substring(fullName.indexOf(" ") + 1));
+			setFirstName(fullName.substring(0, fullName.lastIndexOf(" ")));
+			setLastName(fullName.substring(fullName.lastIndexOf(" ") + 1));
 		}
 		else {
 			setLastName(fullName);
@@ -150,8 +150,8 @@ public class PersonSearchCriteria extends BaseObject<BusinessKey> {
 	}
 
 	@BusinessKey
-	public AssociationRoles getRole() { return role; }
-	public PersonSearchCriteria setRole(AssociationRoles role) { this.role = role; return this; }
+	public AssociationRole getRole() { return role; }
+	public PersonSearchCriteria setRole(AssociationRole role) { this.role = role; return this; }
 
 	@BusinessKey
 	public Set<Organization> getOrganizations() { return this.organizations; }

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.Collection;
 
-public enum AssociationRoles implements Role {
+public enum AssociationRole implements Role {
 	EMPLOYEE,
 	FACULTY,
 	STUDENT,

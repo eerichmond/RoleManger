@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- Defines the web package to scan for annotation -->
+    <context:component-scan base-package="com.eerichmond"/>
+
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven/>
+
+    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/*"/>
+            <mvc:mapping path="/api/**/*"/>
+            <bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor" p:cacheSeconds="0" p:useExpiresHeader="true" p:useCacheControlHeader="true" p:useCacheControlNoStore="true" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <!-- handle multipart document upload 10mb limit -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:maxUploadSize="10485760" />
+
+    <!-- Resolves views  -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" p:order="0" />
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2" p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
+
+    <!-- properties files -->
+    <beans profile="local">
+        <!-- Define property placeholder -->
+        <context:property-placeholder location="
+            classpath:role-manager.local.properties"
+            ignore-resource-not-found="true"/>
+    </beans>
+    <beans profile="stage,prod">
+        <context:property-placeholder location="classpath:role-manager.${spring.profiles.active}.properties"/>
+    </beans>
+
+</beans>

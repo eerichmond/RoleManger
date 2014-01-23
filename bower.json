@@ -1,0 +1,16 @@
+{
+  "name": "role-manager",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "1.2.5",
+    "angular-resource": "1.2.5",
+    "angular-route": "1.2.5",
+    "angular-animate": "1.2.5",
+    "angular-mocks": "1.2.5",
+    "angular-ui-bootstrap-bower": "latest",
+    "less.js": "latest",
+    "bootstrap": "latest",
+    "lodash": "latest",
+    "momentjs": "latest"
+  }
+}

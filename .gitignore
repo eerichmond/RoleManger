@@ -1,2 +1,7 @@
+# IntelliJ
 .idea/artifacts/RoleManger_war_exploded.xml
 .idea/libraries
+
+# Grunt & Bower
+bower_components/
+node_modules/
